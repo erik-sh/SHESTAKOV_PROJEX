@@ -1,0 +1,79 @@
+{% extends 'autosalon/base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+        {% if car.image %}
+        <img src="{{ car.image.url }}" class="img-fluid rounded" alt="{{ car.title }}">
+        {% else %}
+        <div class="bg-secondary text-white d-flex align-items-center justify-content-center rounded" style="height: 400px;">
+            <span>Изображение отсутствует</span>
+        </div>
+        {% endif %}
+    </div>
+    
+    <div class="col-md-6">
+        <h1>{{ car.brand }} {{ car.model }}</h1>
+        <p class="text-muted">{{ car.year }} год выпуска</p>
+        
+        {% if car.is_sold %}
+        <div class="alert alert-danger">Этот автомобиль уже продан</div>
+        {% else %}
+        <div class="alert alert-success">В наличии</div>
+        {% endif %}
+        
+        <div class="mb-4">
+            <h2 class="text-primary">{{ car.price }} ₽</h2>
+        </div>
+        
+        <ul class="list-group mb-4">
+            <li class="list-group-item"><strong>Пробег:</strong> {{ car.mileage }} км</li>
+            <li class="list-group-item"><strong>Цвет:</strong> {{ car.color }}</li>
+            <li class="list-group-item"><strong>Дата добавления:</strong> {{ car.created_at|date:"d.m.Y" }}</li>
+        </ul>
+        
+        <h4>Описание:</h4>
+        <p>{{ car.description }}</p>
+    </div>
+</div>
+
+<!-- Форма тест-драйва -->
+{% if not car.is_sold %}
+<div class="card mt-5">
+    <div class="card-header">
+        <h4>Записаться на тест-драйв</h4>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="id_name" class="form-label">Имя</label>
+                    {{ form.name }}
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="id_phone" class="form-label">Телефон</label>
+                    {{ form.phone }}
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="id_email" class="form-label">Email</label>
+                    {{ form.email }}
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="id_preferred_date" class="form-label">Желаемая дата</label>
+                    {{ form.preferred_date }}
+                </div>
+                <div class="col-12 mb-3">
+                    <label for="id_message" class="form-label">Дополнительная информация</label>
+                    {{ form.message }}
+                </div>
+                <div class="col-12">
+                    <input type="hidden" name="car" value="{{ car.id }}">
+                    <button type="submit" class="btn btn-primary">Отправить заявку</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

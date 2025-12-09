@@ -1,0 +1,32 @@
+{% extends 'autosalon/base.html' %}
+
+{% block content %}
+<h1 class="mb-4">Наши поставщики</h1>
+
+<div class="row">
+    {% for supplier in suppliers %}
+    <div class="col-md-6 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">{{ supplier.name }}</h5>
+                <div class="mb-2">
+                    {% for i in "12345" %}
+                    {% if forloop.counter <= supplier.rating %}
+                    <span class="text-warning">★</span>
+                    {% else %}
+                    <span class="text-secondary">★</span>
+                    {% endif %}
+                    {% endfor %}
+                    <span class="text-muted">({{ supplier.rating }}/5)</span>
+                </div>
+                <p><strong>Контактное лицо:</strong> {{ supplier.contact_person }}</p>
+                <p><strong>Телефон:</strong> {{ supplier.phone }}</p>
+                <p><strong>Email:</strong> {{ supplier.email }}</p>
+                <p><strong>Адрес:</strong> {{ supplier.address }}</p>
+                <p><strong>Специализация:</strong> {{ supplier.specialization }}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

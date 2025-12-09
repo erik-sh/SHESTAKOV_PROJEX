@@ -1,0 +1,48 @@
+{% extends 'autosalon/base.html' %}
+
+{% block content %}
+<h1 class="mb-4">Каталог автомобилей</h1>
+
+<!-- Фильтр по маркам -->
+<div class="mb-4">
+    <h5>Фильтр по марке:</h5>
+    <div class="btn-group" role="group">
+        <a href="{% url 'cars_list' %}" class="btn btn-outline-secondary {% if not selected_brand %}active{% endif %}">Все</a>
+        {% for brand in brands %}
+        <a href="?brand={{ brand }}" class="btn btn-outline-secondary {% if selected_brand == brand %}active{% endif %}">{{ brand }}</a>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="row">
+    {% for car in cars %}
+    <div class="col-md-4 mb-4">
+        <div class="card car-card h-100">
+            {% if car.image %}
+            <img src="{{ car.image.url }}" class="card-img-top" alt="{{ car.title }}" style="height: 200px; object-fit: cover;">
+            {% endif %}
+            {% if car.is_sold %}
+            <span class="badge bg-danger sold-badge">Продано</span>
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ car.brand }} {{ car.model }}</h5>
+                <p class="card-text">
+                    <small class="text-muted">
+                        {{ car.year }} год • {{ car.mileage }} км • {{ car.color }}
+                    </small>
+                </p>
+                <p class="text-primary fw-bold">{{ car.price }} ₽</p>
+                <p class="card-text">{{ car.description|truncatechars:100 }}</p>
+                <a href="{% url 'car_detail' car.id %}" class="btn btn-primary">Подробнее</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="alert alert-info">
+            По вашему запросу автомобилей не найдено.
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

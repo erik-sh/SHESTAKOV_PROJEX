@@ -1,0 +1,42 @@
+[
+  {
+    "model": "autosalon.car",
+    "pk": 1,
+    "fields": {
+      "title": "Toyota Camry 2021",
+      "brand": "Toyota",
+      "model": "Camry",
+      "year": 2021,
+      "price": "2500000.00",
+      "mileage": 30000,
+      "color": "Белый",
+      "description": "Отличное состояние, один владелец",
+      "is_sold": false
+    }
+  },
+  {
+    "model": "autosalon.car",
+    "pk": 2,
+    "fields": {
+      "title": "BMW X5 2022",
+      "brand": "BMW",
+      "model": "X5",
+      "year": 2022,
+      "price": "5500000.00",
+      "mileage": 15000,
+      "color": "Черный",
+      "description": "Полный привод, премиум комплектация",
+      "is_sold": false
+    }
+  },
+  {
+    "model": "autosalon.service",
+    "pk": 1,
+    "fields": {
+      "name": "Полное ТО",
+      "description": "Комплексное техническое обслуживание",
+      "price": "15000.00",
+      "duration": "3-4 часа"
+    }
+  }
+]

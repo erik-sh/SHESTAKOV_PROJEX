@@ -1,0 +1,50 @@
+{% extends 'autosalon/base.html' %}
+
+{% block content %}
+<!-- Герой-секция -->
+<div class="hero-section bg-light rounded p-5 mb-5 text-center">
+    <h1 class="display-4">Добро пожаловать в Premium Cars!</h1>
+    <p class="lead">Найдите свой идеальный автомобиль среди лучших предложений</p>
+    <a href="{% url 'cars_list' %}" class="btn btn-primary btn-lg">Смотреть каталог</a>
+</div>
+
+<!-- Популярные автомобили -->
+<section class="mb-5">
+    <h2 class="mb-4">Новые поступления</h2>
+    <div class="row">
+        {% for car in cars %}
+        <div class="col-md-4 mb-4">
+            <div class="card car-card h-100">
+                {% if car.image %}
+                <img src="{{ car.image.url }}" class="card-img-top" alt="{{ car.title }}" style="height: 200px; object-fit: cover;">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ car.brand }} {{ car.model }}</h5>
+                    <p class="card-text">{{ car.year }} год • {{ car.mileage }} км</p>
+                    <p class="text-primary fw-bold">{{ car.price }} ₽</p>
+                    <a href="{% url 'car_detail' car.id %}" class="btn btn-outline-primary">Подробнее</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Наши услуги -->
+<section class="mb-5">
+    <h2 class="mb-4">Популярные услуги</h2>
+    <div class="row">
+        {% for service in services %}
+        <div class="col-md-3 mb-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ service.name }}</h5>
+                    <p class="card-text">{{ service.description|truncatechars:100 }}</p>
+                    <p class="fw-bold">{{ service.price }} ₽</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
